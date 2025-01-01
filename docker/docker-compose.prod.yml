@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  database:
+    image: postgres
+    container_name: ${PROJECT}_database_prod
+  backend:
+    image: backend_prod:${PROJECT}
+    container_name: ${PROJECT}_backend_prod
+    build:
+      target: production
+  frontend:
+    image: frontend_prod:${PROJECT}
+    container_name: ${PROJECT}_frontend_prod
+    build:
+      target: production
+    ports:
+      - ${CLIENT_PORT}:80

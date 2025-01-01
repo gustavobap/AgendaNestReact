@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+  database:
+    environment:
+      POSTGRES_USER: postgresuser
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: slot_bookings
+  backend:
+    user: ${DOCKER_UID}
+    ports:
+      - ${API_PORT}:3000
+    build:
+      context: ../backend
+      dockerfile: ../docker/backend.Dockerfile
+      args:
+        UID: ${DOCKER_UID}
+        UPASSWORD: ${DOCKER_UPASSWORD}
+        UNAME: ${DOCKER_UNAME}
+        PROJECT: ${PROJECT}
+    environment:
+      CLIENT_IP: ${CLIENT_IP}
+      CLIENT_PORT: ${CLIENT_PORT}
+      DB_HOST: database
+      DB_NAME: slot_bookings
+      DB_USER: postgresuser
+      DB_PASSWORD: postgrespassword
+    depends_on:
+      - database
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: ../docker/frontend.Dockerfile
+      args:
+        UID: ${DOCKER_UID}
+        UPASSWORD: ${DOCKER_UPASSWORD}        
+        UNAME: ${DOCKER_UNAME}
+        PROJECT: ${PROJECT}
+        SERVER_IP: ${SERVER_IP}
+        API_PORT: ${API_PORT}
+

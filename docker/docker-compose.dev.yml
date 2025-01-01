@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  database:
+    image: postgres
+    container_name: ${PROJECT}_database_dev
+    # volumes:
+    #   - ../backend/pg_data:/var/lib/postgresql/data
+  backend:
+    image: backend_dev:${PROJECT}
+    container_name: ${PROJECT}_backend_dev
+    build:
+      target: development
+    volumes:
+      - ../backend/home:/home/${DOCKER_UNAME}
+      # - ../backend/.gem/usr_local:/usr/local/bundle
+      # - ../backend/.gem/lib:/usr/local/lib/ruby/gems
+  frontend:
+    user: ${DOCKER_UID}
+    image: frontend_dev:${PROJECT}
+    container_name: ${PROJECT}_frontend_dev
+    build:
+      target: development
+    ports:
+      - ${CLIENT_PORT}:3000
+    volumes:
+      - ../frontend/home:/home/${DOCKER_UNAME}
