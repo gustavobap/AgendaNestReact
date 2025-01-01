@@ -1,13 +1,20 @@
 version: "3.8"
 services:
   database:
-    image: postgres
     container_name: ${PROJECT}_database_prod
+    environment:
+      POSTGRES_DB: ${PROJECT}_prod
+      POSTGRES_USER: mydbuser_prod
+      POSTGRES_PASSWORD: mydbpassword_prod
   backend:
     image: backend_prod:${PROJECT}
     container_name: ${PROJECT}_backend_prod
     build:
       target: production
+    environment:
+      DB_NAME: ${PROJECT}_prod
+      DB_USER: mydbuser_prod
+      DB_PASSWORD: mydbpassword_prod
   frontend:
     image: frontend_prod:${PROJECT}
     container_name: ${PROJECT}_frontend_prod

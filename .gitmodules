@@ -1,0 +1,6 @@
+[submodule "frontend/home/agenda"]
+	path = frontend/home/agenda
+	url = git@github-mine:gustavobap/AgendaReact.git
+[submodule "backend/home/agenda"]
+	path = backend/home/agenda
+	url = git@github-mine:gustavobap/AgendaNest.git

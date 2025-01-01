@@ -1,8 +1,12 @@
 version: "3.8"
 services:
   database:
-    image: postgres
+  database:
     container_name: ${PROJECT}_database_dev
+    environment:
+      POSTGRES_DB: ${PROJECT}_dev
+      POSTGRES_USER: mydbuser
+      POSTGRES_PASSWORD: mydbpassword
     # volumes:
     #   - ../backend/pg_data:/var/lib/postgresql/data
   backend:
@@ -10,6 +14,10 @@ services:
     container_name: ${PROJECT}_backend_dev
     build:
       target: development
+    environment:
+      DB_NAME: ${PROJECT}_dev
+      DB_USER: mydbuser
+      DB_PASSWORD: mydbpassword
     volumes:
       - ../backend/home:/home/${DOCKER_UNAME}
       # - ../backend/.gem/usr_local:/usr/local/bundle
